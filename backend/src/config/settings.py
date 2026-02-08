@@ -3,10 +3,11 @@ try:
 except ImportError:
     from pydantic import BaseSettings
 from typing import Optional
+import os
 
 
 class Settings(BaseSettings):
-    # Database
+    # Database - allow environment variable to override
     database_url: str = "sqlite:///./todo_app.db"  # Default to SQLite for development
 
     # Environment
@@ -17,7 +18,10 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_expiration_delta: int = 604800  # 7 days in seconds
 
-    model_config = {"env_file": ".env", "extra": "ignore"}
+    # Frontend URL for CORS
+    frontend_url: str = "http://localhost:3000"
+
+    model_config = {"env_file": ".env", "extra": "ignore", "case_sensitive": True}
 
     @property
     def is_production(self) -> bool:
@@ -35,4 +39,5 @@ class Settings(BaseSettings):
         return self.database_url.startswith("postgresql")
 
 
+# Initialize settings
 settings = Settings()

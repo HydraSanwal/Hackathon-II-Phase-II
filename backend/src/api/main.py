@@ -7,6 +7,7 @@ from datetime import datetime
 from src.api.routes import tasks, auth
 from src.database.session import create_db_and_tables
 from src.auth.middleware import jwt_middleware
+from src.config.settings import settings
 
 
 app = FastAPI(title="Todo API", version="1.0.0")
@@ -17,10 +18,9 @@ allowed_origins = [
     "http://127.0.0.1:3000"
 ]
 
-# Add production frontend URL from environment variable if available
-FRONTEND_URL = os.getenv("FRONTEND_URL")
-if FRONTEND_URL:
-    allowed_origins.append(FRONTEND_URL)
+# Add production frontend URL from settings if available
+if settings.frontend_url and settings.frontend_url not in allowed_origins:
+    allowed_origins.append(settings.frontend_url)
 
 app.add_middleware(
     CORSMiddleware,
