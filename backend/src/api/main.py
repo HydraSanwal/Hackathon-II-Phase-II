@@ -14,8 +14,9 @@ app = FastAPI(title="Todo API", version="1.0.0")
 
 # CORS middleware for frontend
 allowed_origins = [
-    "http://localhost:3000", 
-    "http://127.0.0.1:3000"
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://sanwalhackathoniiphaseii.vercel.app"  # Explicitly add your frontend URL
 ]
 
 # Add production frontend URL from settings if available
