@@ -18,10 +18,10 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_expiration_delta: int = 604800  # 7 days in seconds
 
-    # Frontend URL for CORS
+    # Frontend URL for CORS - explicitly map to environment variable
     frontend_url: str = "http://localhost:3000"
-
-    model_config = {"env_file": ".env", "extra": "ignore", "case_sensitive": True}
+    
+    model_config = {"env_file": ".env", "env_nested_delimiter": "__", "extra": "ignore", "case_sensitive": True}
 
     @property
     def is_production(self) -> bool:
