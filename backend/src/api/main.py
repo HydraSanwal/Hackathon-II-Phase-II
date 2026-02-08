@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
@@ -11,9 +12,19 @@ from src.auth.middleware import jwt_middleware
 app = FastAPI(title="Todo API", version="1.0.0")
 
 # CORS middleware for frontend
+allowed_origins = [
+    "http://localhost:3000", 
+    "http://127.0.0.1:3000"
+]
+
+# Add production frontend URL from environment variable if available
+FRONTEND_URL = os.getenv("FRONTEND_URL")
+if FRONTEND_URL:
+    allowed_origins.append(FRONTEND_URL)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
