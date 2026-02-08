@@ -1,9 +1,11 @@
 // Authentication functions for the frontend
 // Connects to the backend API
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export const signIn = async (email: string, password: string) => {
   // Sign in implementation
-  const response = await fetch('http://localhost:8000/api/v1/auth/signin', {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,7 +27,7 @@ export const signIn = async (email: string, password: string) => {
 
 export const signUp = async (email: string, password: string) => {
   // Sign up implementation - note: name is not required by backend
-  const response = await fetch('http://localhost:8000/api/v1/auth/signup', {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
